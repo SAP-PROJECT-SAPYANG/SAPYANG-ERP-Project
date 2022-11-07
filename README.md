@@ -1,6 +1,6 @@
 ## 😀SYNC Project Team SAPYANG's Repository
 
-# 식품기업 SAPYANG의 주문-생산-판매 프로세스에 관한 ERP 고도화 
+# 식품기업 SAPYANG의 비즈니스 프로세스에 관한 ERP 고도화 
 #### _project nickname :  sapyang erp project
 #### _project execution period :  2022.09.01 - 2022.12.08_
 #### _project members :  강우주, 박유선, 박중현, 양영모, 윤조현, 이수민, 임현지_
