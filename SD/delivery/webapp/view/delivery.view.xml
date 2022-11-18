@@ -1,0 +1,184 @@
+<mvc:View 
+controllerName="sync.c203.delivery.controller.delivery"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
+	xmlns="sap.m" 	xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+	xmlns:ui="sap.suite.ui.commons">
+    <Page id="page" title="배송 현황" titleLevel="H1" showFooter="false" >
+
+		<f:DynamicPage showFooter="true">
+			<f:header>
+				<f:DynamicPageHeader>
+                    <f:content>
+                        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch0" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+                            <fb:filterItems>
+                                <fb:FilterItem name="ORNUM" label="주문번호">
+								    <fb:control>
+                                        <SearchField
+										id="search" 
+										placeholder="SO2211010001"
+										search=".onSearch" 
+										width="7rem" />
+										<!-- value="{
+											path: 'view>/searchControl/search'
+										}"/> -->
+                                    </fb:control>
+                                </fb:FilterItem>
+								<fb:FilterItem name="VENNM" label="고객명">
+                                    <fb:control>
+                                        <SearchField 
+										id="search2" 
+										placeholder="(주)SAPYANG"
+										search=".onSearch2" 
+										width="15rem" />
+										<!-- value="{
+											path: 'view>/searchControl/search'
+										}"/> -->
+                                    </fb:control>
+                                </fb:FilterItem>
+                                <fb:FilterItem name="DELST" label="배송상태">
+                                    <!-- <fb:control>
+                                        <SearchField 
+										id="search3" 
+										placeholder="상품준비중"
+										search=".onSearch3" 
+										width="7rem" 
+										value="{
+											path: 'view>/searchControl/search'
+										}"/>
+                                    </fb:control> -->
+										<fb:control>
+										<ComboBox
+											name="delivery"
+											selectionChange=".onSelectionChange"
+										>
+											<items>
+												<core:Item key="" text="전체"/>
+												<core:Item key="상품준비중" text="상품준비중"/>
+												<core:Item key="배송완료" text="배송완료"/>
+												<core:Item key="배송중" text="배송중"/>
+											</items>
+											
+										</ComboBox>
+									</fb:control>
+                                </fb:FilterItem>
+                            </fb:filterItems>
+                        </fb:FilterBar>
+                    </f:content>
+				</f:DynamicPageHeader>
+			</f:header>
+        <f:content>
+
+	   	<Table 
+		id="Table"
+		headerText="배송 현황"
+		alternateRowColors="true"
+		mode = "SingleSelectMaster"
+		items="{
+			path: '/deliverySet',
+			sorter: {
+				path: 'Ornum'
+			}
+		}"
+		growing="true"
+		growingThreshold="10">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="배송 현황" level="H2"/>
+			</OverflowToolbar>
+		</headerToolbar>
+			<columns>
+			<Column
+				width="15em">
+				<Text text="주문 번호" />
+			</Column>
+				<Column
+				width="13em">
+				<Text text="고객명" />
+			</Column>
+			<Column
+				width="13em"
+				hAlign="Center"
+				minScreenWidth="Tablet"
+				demandPopin="true">
+				<Text text="총액" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="Center"
+				width="12em">
+				<Text text=" " />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="배송 상태" />
+			</Column>
+			<Column
+				minScreenWidth="Tablet"
+				demandPopin="true"
+				hAlign="Center">
+				<Text text="상세 정보" />
+			</Column>
+		</columns>
+			<items>
+			<ColumnListItem vAlign="Middle">
+				<cells>
+					<ObjectIdentifier
+						title ="{Ornum}"
+						text="주문일:{path: 'Ordat', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy/MM/dd', UTC: true }}"/>
+					<Text
+						text="{Vennm}" />	
+					<Text text="{ 
+								path: 'Total',
+								formatter: '.multipletotal'
+							} { 
+								path: 'view>/curr'
+							} KRW" />
+				<ui:MicroProcessFlow>
+					<ui:content>
+						<!-- <ui:MicroProcessFlowItem state="{= ${Delst} === '상품준비중' ? 'Error' : 'None' }"  icon="sap-icon://accounting-document-verification"/> -->
+						<ui:MicroProcessFlowItem state="Success">
+							<ui:customControl>
+								<core:Icon src="sap-icon://accounting-document-verification" size="40px" color="{= ${Delst} === '상품준비중' ? '#DC143C' : '#C0C0C0' }"/>
+							</ui:customControl>
+						</ui:MicroProcessFlowItem>
+
+						<ui:MicroProcessFlowItem state="Success">
+							<ui:customControl>
+								<core:Icon src="sap-icon://shipping-status" size="40px" color="{= ${Delst} === '배송중' ? '#FFD700' : '#C0C0C0' }"/>
+							</ui:customControl>
+						</ui:MicroProcessFlowItem>
+
+						<ui:MicroProcessFlowItem state="Success">
+							<ui:customControl>
+								<core:Icon src="sap-icon://supplier" size="40px" color="{= ${Delst} === '배송완료' ? '#228B22' : '#C0C0C0' }"/>
+							</ui:customControl>
+						</ui:MicroProcessFlowItem>
+					</ui:content>
+				</ui:MicroProcessFlow>
+					<ObjectStatus
+						text="{Delst}"
+						state="{= ${Delst} === '상품준비중' ? 'Error' : (${Delst} === '배송중' ? 'Warning' : 'Success' ) }" />
+					<!-- <Text
+						text="{Delst}" 
+						state="Warning"/>	 -->
+				</cells>
+				<cells>
+				<Button
+					text="주문 내역"
+					width="100px"
+					press=".onDefaultDialogPress"
+					class="sapUiSmallMarginBottom"
+					ariaHasPopup="Dialog" />
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+	         </f:content>
+   </f:DynamicPage>
+
+    </Page>
+</mvc:View>

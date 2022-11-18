@@ -1,0 +1,101 @@
+<mvc:View controllerName="sync.c203.salesorder.controller.View2"
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:form="sap.ui.layout.form"
+    displayBlock="true"
+    xmlns="sap.m">
+    
+
+    <Page id="page2" title=" " showNavButton="true" navButtonPress=".onNavBack"  >
+
+
+	<form:SimpleForm 
+        
+		width="550px"
+		class="sapUiResponsiveMargin"
+		layout="ResponsiveGridLayout"
+		labelSpanL="3"
+		labelSpanM="3"
+		emptySpanL="8"
+		emptySpanM="8"
+		columnsL="1"
+		columnsM="1"
+		title=" 주문이 완료되었습니다!  "    >
+		<form:content>
+			<Label text="주문 번호"/>
+			<Text text="{
+                path: 'Ornum'
+			}" />
+		</form:content>
+	</form:SimpleForm>
+
+        <content>
+  
+        <VBox
+            height="150px"
+            width="600px"  > 
+            
+            <Table 
+                
+                id="order" 
+                inset="false"
+                items="{   path: '/SalesOrderItemSet'}"
+                
+                 >
+
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+                            <Title text="주문 목록" titleStyle="H5"/>
+                        </content>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column mergeDuplicates="true">
+                        <Text text="주문번호" />
+                    </Column>
+                    <Column width="5rem">    
+                        <Text text="품목번호" />
+                    </Column>    
+                    <Column>    
+                        <Text text="품목명" />
+                    </Column>
+                    <Column width="3rem">    
+                        <Text text="수량" />
+                    </Column>
+                    <Column width="4rem">    
+                        <Text text="단위" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text text="{Ornum}"/>
+                            <Text text="{Itmnm}"/>
+                            <Text text="{Matnm}"/>
+                            <Text text="{Meinm}"/>
+                            <Text text="{Meins}"/>
+                        </cells>
+                    </ColumnListItem>
+                </items>    
+            </Table>
+            </VBox>
+
+
+
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+            <VBox>
+
+				<Button  text="주문 조회 화면 이동 " icon="sap-icon://arrow-right" press="" />
+             </VBox>
+
+			</OverflowToolbar>
+
+        </content>
+
+ </Page>
+</mvc:View>

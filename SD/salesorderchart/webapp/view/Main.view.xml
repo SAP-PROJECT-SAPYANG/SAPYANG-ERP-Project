@@ -1,0 +1,88 @@
+<mvc:View controllerName="sync.c203.salesorderchart.controller.Main"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core"
+	displayBlock="true"
+	height="100%"
+    xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+>
+
+		<f:DynamicPage 
+			id="D_dynamicPage"
+			showFooter="true">
+			
+			<!-- DynamicPage Title -->
+			<f:title>
+				<f:DynamicPageTitle>
+					<f:heading>
+						<Title text="제품별 판매 현황"/>
+					</f:heading>
+					<f:actions>
+					</f:actions>
+					<f:navigationActions>
+						<Button 
+							icon="{app>/screenSizeButton}"
+							type="Transparent"
+							tooltip="{i18n>main.button.fullscreen}"
+							press="onResizeScreenPress"/>
+					</f:navigationActions>
+				</f:DynamicPageTitle>
+			</f:title>
+
+			<!-- DynamicPage Header -->
+			<f:header>
+				<f:DynamicPageHeader pinnable="true">
+					<layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout class="sapUiLargeMarginEnd">
+							<!-- <Select
+								id="DynamicType_Select"
+								change="onTypeChange"
+								items="{DynamicType>/typeList}"
+								selectedKey="{DynamicType>/selectedType}">
+								<core:Item key="{DynamicType>type}" text="{DynamicType>type}" />
+							</Select> -->
+
+							<SegmentedButton 
+								items="{DynamicType>/typeList}"
+								selectedKey="{DynamicType>/selectedType}"
+								selectionChange="onTypeChange">
+								<items>
+									<SegmentedButtonItem
+										key="{DynamicType>type}"
+										text="{DynamicType>type}" 
+										tooltip="{DynamicType>type}"/>
+								</items>
+							</SegmentedButton>
+							
+
+						</layout:VerticalLayout>
+
+						<layout:VerticalLayout>
+							<ObjectAttribute title="현재 상태"/>
+							<ObjectStatus text="{DynamicType>/selectedType}" state="Success" />
+						</layout:VerticalLayout>
+					</layout:HorizontalLayout>
+				</f:DynamicPageHeader>
+			</f:header>
+
+			<!-- DynamicPage Content -->
+			<f:content>
+				<!-- Chart Fragment 추가 -->
+					<core:Fragment id="DynamicTypeChart" fragmentName="sync.c203.salesorderchart.view.fragment.chart" type="XML" />
+			</f:content>
+
+			<!-- DynamicPage Footer -->
+			<!-- <f:footer>
+				<OverflowToolbar>
+					<Button 
+						type="Back"
+						text="이전" 
+						press="onNavBackPress"/>
+					<ToolbarSpacer/>
+					
+				</OverflowToolbar>
+			</f:footer> -->
+		</f:DynamicPage>
+
+</mvc:View>

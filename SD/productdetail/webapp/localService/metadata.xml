@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="http://edu.bgis.co.kr:8001/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://edu.bgis.co.kr:8001/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://edu.bgis.co.kr:8001/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://edu.bgis.co.kr:8001/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="Aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="http://edu.bgis.co.kr:8001/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZI_PRODUCT_DETAILS_CDS" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ZI_PRODUCT_DETAILSType" sap:label="품목정보" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="matcd"/>
+                </Key>
+                <Property Name="matcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="자재코드" sap:quickinfo="[MD]자재코드 Element"/>
+                <Property Name="matnm" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="자재명" sap:quickinfo="[MD]자재명 Element"/>
+                <Property Name="mtynm" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="자재타입" sap:quickinfo="[MD]자재타입명 Element"/>
+                <Property Name="ordty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="주문유형" sap:quickinfo="[MD]주문유형 Element"/>
+                <Property Name="mcurr" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="mcuky" sap:label="단가" sap:quickinfo="[MD]품목단가 Element"/>
+                <Property Name="matty" Type="Edm.String" MaxLength="1" sap:display-format="UpperCase" sap:label="자재타입코드" sap:quickinfo="[MD]자재타입코드 Element"/>
+                <Property Name="matmk" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="기호" sap:quickinfo="[MD]기호 Element"/>
+                <Property Name="matgr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="품목그룹코드" sap:quickinfo="[MD]품목그룹코드 Element"/>
+                <Property Name="mgrnm" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="품목그룹명" sap:quickinfo="[MD]품목그룹명 Element"/>
+                <Property Name="mcuky" Type="Edm.String" MaxLength="5" sap:label="금액단위" sap:quickinfo="[MD]금액단위 Element" sap:semantics="currency-code"/>
+                <Property Name="munit" Type="Edm.String" MaxLength="3" sap:label="단위" sap:quickinfo="[MD]품목단위 Element" sap:semantics="unit-of-measure"/>
+                <Property Name="munet" Type="Edm.Decimal" Precision="8" Scale="2" sap:unit="muwei" sap:label="개별제품중량" sap:quickinfo="[MD]개별제품중량 Element"/>
+                <Property Name="muwei" Type="Edm.String" MaxLength="3" sap:label="제품중량단위" sap:quickinfo="[MD]개별제품중량 단위 Element" sap:semantics="unit-of-measure"/>
+                <Property Name="mbxwt" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="BOX중량" sap:quickinfo="[MD]박스단위중량 Element"/>
+                <Property Name="matsz" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="품목규격" sap:quickinfo="[MD]품목규격 Element"/>
+                <Property Name="mbxsz" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="박스규격" sap:quickinfo="[MD]박스규격 Element"/>
+                <Property Name="mbxnu" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="BOX입수량" sap:quickinfo="[MD]박스입수량 Element"/>
+                <Property Name="mexdt" Type="Edm.String" MaxLength="4" sap:display-format="NonNegative" sap:label="유통기한(일)" sap:quickinfo="[MD]유통기한(일) Element"/>
+                <Property Name="cdbar" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="바코드" sap:quickinfo="[MD]바코드 Element"/>
+                <Property Name="eancd" Type="Edm.String" MaxLength="20" sap:display-format="UpperCase" sap:label="물류바코드" sap:quickinfo="[MD]물류바코드 Element"/>
+                <Property Name="mimdt" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="출시일" sap:quickinfo="[MD]출시일 Element"/>
+                <Property Name="mendt" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="출고중지일" sap:quickinfo="[MD]출고중지일 Element"/>
+                <Property Name="mtxty" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="과세유형" sap:quickinfo="[MD]과세유형 Element"/>
+                <Property Name="lifnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="공급사 계정" sap:quickinfo="[MM] 공급사 계정 번호"/>
+                <Property Name="bcurr" Type="Edm.Decimal" Precision="14" Scale="3" sap:unit="mcuky" sap:label="박스단가" sap:quickinfo="[MD]박스단가 Element"/>
+            </EntityType>
+            <EntityContainer Name="ZI_PRODUCT_DETAILS_CDS_Entities" m:IsDefaultEntityContainer="true" sap:message-scope-supported="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZI_PRODUCT_DETAILS" EntityType="ZI_PRODUCT_DETAILS_CDS.ZI_PRODUCT_DETAILSType" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotations Target="ZI_PRODUCT_DETAILS_CDS.ZI_PRODUCT_DETAILS_CDS_Entities" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Aggregation.ApplySupported">
+                    <Record>
+                        <PropertyValue Property="Transformations">
+                            <Collection>
+                                <String>aggregate</String>
+                                <String>groupby</String>
+                                <String>filter</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Rollup" EnumMember="None"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZI_PRODUCT_DETAILS_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZI_PRODUCT_DETAILS_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

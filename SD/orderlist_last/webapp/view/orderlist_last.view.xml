@@ -1,0 +1,201 @@
+<mvc:View controllerName="sync.c203.orderlistlast.controller.orderlist_last"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m" 	xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core" 
+	xmlns:svm="sap.ui.comp.smartvariants"
+	>
+
+    <Page id="page" title="주문 현황" titleLevel="H1" showFooter="false" >
+
+		<f:DynamicPage showFooter="true">
+			<f:header>
+				<f:DynamicPageHeader>
+                    <f:content>
+                        <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+                            <fb:filterItems>
+                                <fb:FilterItem name="ORNUM" label="주문번호">
+								    <fb:control>
+                                        <SearchField 
+										id="search" 
+										search=".onSearch2" 
+										width="15rem" 
+										value="{
+											path: 'view>/searchControl/search'
+										}"/>
+                                    </fb:control>
+                                </fb:FilterItem>
+                                <fb:FilterItem name="ORDATE" label="주문일자">
+                                    <fb:control>
+										<DatePicker
+											id="search_date"
+											placeholder="Enter Date"
+											value="{
+												path: 'view>/searchControl/datePicker', 
+												type: 'sap.ui.model.type.Date', 
+												formatOptions: {
+													UTC: false
+												}
+											}"
+											change="aaa"
+											width="15rem"/>
+                                    </fb:control>
+                                </fb:FilterItem>
+								<fb:FilterItem name = "stype" label="판매 유형">
+									<fb:control>
+									<ComboBox
+										name="stype"
+										selectionChange=".SelectionChange">
+										<items>
+											<core:Item key ="" 	  text="전체"/>
+											<core:Item key="판매" text="판매"/>
+											<core:Item key="반품" text="반품"/>
+										</items>
+									</ComboBox>
+									</fb:control>
+								</fb:FilterItem>
+                            </fb:filterItems>
+                        </fb:FilterBar>
+                    </f:content>
+				</f:DynamicPageHeader>
+			</f:header>
+        <f:content>
+
+				<Table
+					id="mainTable"
+					headerText="주문내역"
+					items="{
+						path:'/SalesOrderListSet'
+					}"
+					mode = "SingleSelectMaster"
+					selectionChange="onSalesOrdersSelect"
+					delete = "onDeleteData" 
+					growing="true"
+					growingThreshold="10">
+					<headerToolbar>
+						<OverflowToolbar>
+							<content>
+								<Title text="주문목록" level="H2"/>
+								<ToolbarSpacer />
+								<Text text="총 합계 : "/>
+								<Text text="{
+									path: 'view>/sum',
+									type: 'sap.ui.model.type.Float'
+								}"/>
+								
+							</content>
+						</OverflowToolbar>
+					</headerToolbar>
+					<columns>
+						<Column mergeDuplicates="true">
+							<header>
+								<Text text="주문번호" />
+							</header>
+						</Column>
+						<Column mergeDuplicates="true">
+							<header>
+								<Text text="주문일자" />
+							</header>
+						</Column>
+						<Column mergeDuplicates="true">
+							<header>
+								<Text text="총액" />
+							</header>
+						</Column>
+						<Column mergeDuplicates="true">
+							<header>
+								<Text text="품목번호" />
+							</header>
+						</Column>
+						<Column
+							minScreenWidth="Tablet"
+							demandPopin="true"
+							hAlign="End" >
+							<header>
+								<Text text="품목명" />
+							</header>
+						</Column>
+						<Column
+							minScreenWidth="Tablet"
+							demandPopin="true"
+							hAlign="Center" >
+							<header>
+								<Text text="수량" />
+							</header>
+						</Column>
+						<Column 
+							minScreenWidth="Tablet"
+							demandPopin="true"
+							hAlign="Center">
+							<header>
+								<Text text="단위" />
+							</header>
+						</Column>
+							<Column 
+							minScreenWidth="Tablet"
+							demandPopin="true"
+							hAlign="Center">
+								<header>
+									<Text text="가격" />
+								</header>
+							</Column>
+									<Column hAlign="End">
+							<header>
+								<Text text="주문유형" />
+							</header>
+						</Column>
+					</columns>
+					<ColumnListItem vAlign="Middle">
+						<Text text="{Ornum}" />
+						<!-- <Text text="{Ordat}" /> -->
+						<Text text="{ path: 'Ordat', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'yyyy/MM/dd', UTC: true } }" />
+						<!-- <Text text="{ parts: ['Total', 'view>/curr'], type:'sap.ui.model.type.Currency',
+							formatOptions: {
+								preserveDecimals : false
+							}}" /> -->
+						<Text text="{ 
+								path: 'Total',
+								formatter: '.multipletotal'
+							} { 
+								path: 'view>/curr'
+							}" />
+						<Text text="{Itmnm}"/>
+						<Text text="{Matnm}" />
+						<Text text="{Meinm}" />
+						<Text text="{Meins}" />
+						<Text text="{ 
+								path: 'Price',
+								formatter: '.multipletotal'
+							} { 
+								path: 'view>/curr'
+							}" />
+						<ObjectStatus 
+						text="{Ortype}" 
+						state ="{=${Ortype} === '판매' ? 'Success' : 'Error'}"/>
+						<!-- <ObjectNumber
+							number="{WeightMeasure}" unit="{WeightUnit}"
+							state="{
+								path: 'WeightMeasure',
+								formatter: 'sap.m.sample.TableMergeCells.Formatter.weightState'
+							}" />
+						<ObjectNumber
+								number="{
+									parts:[{path:'Price'},{path:'CurrencyCode'}],
+									type: 'sap.ui.model.type.Currency',
+									formatOptions: {showMeasure: false}
+								}"
+								unit="{CurrencyCode}" /> -->
+					</ColumnListItem>
+				</Table>
+            </f:content>
+			<f:footer>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+					<Button text="주문 삭제" visible="{= ${tog>/stat} === '__Normal' ? true : false }" press="onDeleteMode" type="Reject"/>
+					<Button text="취소" visible="{= ${tog>/stat} === '__Delete' ? true : false }" press="onDeleteCancel" type="Reject"/>
+				</OverflowToolbar>
+			</f:footer>
+		</f:DynamicPage>
+
+    </Page>
+</mvc:View>
