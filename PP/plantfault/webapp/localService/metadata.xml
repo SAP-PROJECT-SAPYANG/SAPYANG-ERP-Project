@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZGWC2PP3004_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="FaultAnalysisPlant" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Plant"/>
+                    <PropertyRef Name="Defty"/>
+                </Key>
+                <Property Name="Pdnum" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="생산번호"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="플랜트코드"/>
+                <Property Name="Quant" Type="Edm.Decimal" Precision="10" Scale="3" sap:unicode="false" sap:label="수량"/>
+                <Property Name="Defty" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="불량유형"/>
+                <Property Name="Dtcnt" Type="Edm.Int32" sap:unicode="false" sap:label="유형별개수"/>
+                <Property Name="Pimpr" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="개선안"/>
+                <Property Name="Fault" Type="Edm.Int32" sap:unicode="false" sap:label="불량수량"/>
+            </EntityType>
+            <EntityType Name="FaultAnalysis" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Matnm"/>
+                    <PropertyRef Name="Defty"/>
+                </Key>
+                <Property Name="Pdnum" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="생산번호"/>
+                <Property Name="Matnm" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Quant" Type="Edm.Decimal" Precision="10" Scale="3" sap:unicode="false" sap:label="수량"/>
+                <Property Name="Defty" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="불량유형"/>
+                <Property Name="Dtcnt" Type="Edm.Int32" sap:unicode="false" sap:label="유형별개수"/>
+                <Property Name="Rtops" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="처리사항"/>
+                <Property Name="Fault" Type="Edm.Int32" sap:unicode="false" sap:label="불량수량"/>
+            </EntityType>
+            <EntityType Name="FaultItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Pdnum"/>
+                </Key>
+                <Property Name="Pdnum" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="생산번호"/>
+                <Property Name="Defty" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="불량유형"/>
+                <Property Name="Dtcnt" Type="Edm.Int32" sap:unicode="false" sap:label="유형별개수"/>
+                <Property Name="Rtops" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="처리사항"/>
+                <Property Name="Pimpr" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="개선안"/>
+            </EntityType>
+            <EntityType Name="FaultCount" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Matnm"/>
+                    <PropertyRef Name="Defty"/>
+                </Key>
+                <Property Name="Pdnum" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="생산번호"/>
+                <Property Name="Matnm" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Quant" Type="Edm.Decimal" Precision="13" Scale="3" sap:unicode="false" sap:label="수량"/>
+                <Property Name="Defty" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="불량유형"/>
+                <Property Name="Dtcnt" Type="Edm.Int32" sap:unicode="false" sap:label="유형별개수"/>
+                <Property Name="Rtops" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="처리사항"/>
+                <Property Name="Fault" Type="Edm.Int32" sap:unicode="false" sap:label="불량수량"/>
+            </EntityType>
+            <EntityContainer Name="ZGWC2PP3004_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="FaultAnalysisPlantSet" EntityType="ZGWC2PP3004_SRV.FaultAnalysisPlant" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FaultAnalysisSet" EntityType="ZGWC2PP3004_SRV.FaultAnalysis" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FaultItemSet" EntityType="ZGWC2PP3004_SRV.FaultItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FaultCountSet" EntityType="ZGWC2PP3004_SRV.FaultCount" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2PP3004_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2PP3004_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

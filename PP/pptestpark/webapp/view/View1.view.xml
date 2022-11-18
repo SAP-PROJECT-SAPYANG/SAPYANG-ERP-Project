@@ -1,0 +1,272 @@
+<mvc:View controllerName="pptestpark.controller.View1"
+	xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:micro="sap.suite.ui.microchart"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:core="sap.ui.core" 
+    xmlns:l="sap.ui.layout" height="100%">
+ 
+    
+<Page id="page" title="생산 현황" titleLevel="H5" showFooter="true" >
+	<l:Splitter height="600px" width="100%">
+
+        <VBox>
+            <Button width="100%" text="P001">
+                <layoutData><l:SplitterLayoutData size="300px"/></layoutData>
+            </Button>
+        
+            <layout:FixFlex id='chartFixFlex' minFlexSize="250">
+             <layout:flexContent>
+                <viz:Popover id="idPopOver"></viz:Popover>
+                <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}"
+                    height='550px' width="100%" vizType='column'
+                    vizProperties="{
+                        title: {
+                            style: {
+                                color: ' '
+                            },
+                            text: '삽양광주공장'
+                        },
+                        valueAxis: {
+                            title: {
+                                visible: false
+                            }
+                        },
+                        categoryAxis: {
+                            title: {
+                                visible: false
+                            }
+                        }
+                    }">
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{view>/plant1}">
+                            <viz.data:dimensions>
+                                <!-- <viz.data:DimensionDefinition name="Plant1"
+                                    value="적정생산량" /> -->
+                                    <viz.data:DimensionDefinition name="Plant1s"
+                                        value="{view>pap}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="적정생산량"
+                                    value="28000" />
+                                    <viz.data:MeasureDefinition name="총생산량"
+                                        value="{view>pdata}" />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                            values="적정생산량" />
+                        <!-- <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                            values="Plant1" /> -->
+                            <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                                values="총생산량" />
+                            <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                                values="Plant1s" />
+                    </viz:feeds>
+                </viz:VizFrame>
+            </layout:flexContent>
+         </layout:FixFlex>
+    </VBox>
+    
+
+    <VBox>
+		<Button width="100%" text="P002">
+			<layoutData><l:SplitterLayoutData size="auto" /></layoutData>
+		</Button>
+
+            <layout:FixFlex id='chartFixFlex2' minFlexSize="250">
+             <layout:flexContent>
+                <viz:Popover id="idPopOver2"></viz:Popover>
+                <viz:VizFrame id="idVizFrame2" uiConfig="{applicationSet:'fiori'}"
+                    height='550px' width="100%" vizType='column'
+                    vizProperties="{
+                        title: {
+                            style: {
+                                color: ' '
+                            },
+                            text: '삽양화성공장'
+                        },
+                        categoryAxis: {
+                            title: {
+                                visible: false
+                            }
+                        }
+                    }">
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{view>/plant2}">
+                            <viz.data:dimensions>
+                                <!-- <viz.data:DimensionDefinition name="Plant2"
+                                    value="적정생산량" /> -->
+                                    <viz.data:DimensionDefinition name="Plant2s"
+                                        value="{view>pap}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="적정생산량"
+                                    value="12000" />
+                                    <viz.data:MeasureDefinition name="총생산량"
+                                        value="{view>pdata}" />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                            values="적정생산량" />
+                        <!-- <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                            values="Plant2" /> -->
+                            <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                                values="총생산량" />
+                            <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                                values="Plant2s" />
+                    </viz:feeds>
+                </viz:VizFrame>
+            </layout:flexContent>
+         </layout:FixFlex>
+    </VBox>
+
+    <VBox>
+		<Button width="100%" text="P003">
+			<layoutData><l:SplitterLayoutData size="30%" minSize="200px" /></layoutData>
+		</Button>
+
+            <layout:FixFlex id='chartFixFlex3' minFlexSize="250">
+             <layout:flexContent>
+                <viz:Popover id="idPopOver3"></viz:Popover>
+                <viz:VizFrame id="idVizFrame3" uiConfig="{applicationSet:'fiori'}"
+                    height='550px' width="100%" vizType='column'
+                    vizProperties="{
+                        title: {
+                            style: {
+                                color: ' '
+                            },
+                            text: '삽양양주공장'
+                        },
+                        categoryAxis: {
+                            title: {
+                                visible: false
+                            }
+                        }
+                    }">
+                    
+                    <viz:dataset>
+                        <viz.data:FlattenedDataset data="{view>/plant3}">
+                            <viz.data:dimensions>
+                                <!-- <viz.data:DimensionDefinition name="Plant3"
+                                    value="적정생산량" /> -->
+                                    <viz.data:DimensionDefinition name="Plant3s"
+                                        value="{view>pap}" />
+                            </viz.data:dimensions>
+                            <viz.data:measures>
+                                <viz.data:MeasureDefinition name="적정생산량"
+                                    value="8000" />
+                                    <viz.data:MeasureDefinition name="총생산량"
+                                        value="{view>pdata}" />
+                            </viz.data:measures>
+                        </viz.data:FlattenedDataset>
+                    </viz:dataset>
+
+                    <viz:feeds>
+                        <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                            values="적정생산량" />
+                        <!-- <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                            values="Plant1" /> -->
+                            <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                                values="총생산량" />
+                            <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                                values="Plant3s" />
+                    </viz:feeds>
+                </viz:VizFrame>
+            </layout:flexContent>
+         </layout:FixFlex>    
+    </VBox>
+
+
+</l:Splitter>
+
+
+<content>
+    <Table id="table"
+            inset="false"
+            items="{   path: '/PlantProdSet'}"
+            updateFinished=".oDataLoaded"> 
+            <!-- updateFinished 테이블 데이터가 변경될 때 실행되는 이벤트 !!정말 중요!! -->
+
+    <columns>
+        <Column>
+            <Text text="공장명" />
+        </Column>
+        <Column >
+            <Text text="적정생산량" />
+        </Column>
+        <Column >
+            <Text text="실생산수량" />
+        </Column>
+        <Column minScreenWidth="Tablet" demandPopin="true">
+            <Text text="비율" />
+        </Column>
+        <Column>
+            <Text text="생산 조정(80~110)" />
+        </Column>
+    </columns>
+
+    <items>
+        <ColumnListItem vAlign="Middle">
+           <cells>
+                <Text text="{Plant}"/>
+                <Text text="{Prodp}" />
+                <Text text="{= parseFloat(${Quant})}"/> 
+                <!-- parseFloat  -->
+                <!-- <Text text="{ path : 'Quant',  formatter: '.myFormatter.QuantValue'}"/> -->
+                <!-- <Text text="{formatter: '.QuantValue' }" /> -->
+                <FlexBox height="70px" width="120px" renderType="Bare">
+                    <micro:BulletMicroChart scale="%" targetValue="100" forecastValue="110" app:name="bullet" press="press" size="Responsive">
+                        <micro:actual>
+                            <micro:BulletMicroChartData value="{
+                                parts: [
+                                    { path: 'Quant' },
+                                    { path: 'Prodp' }
+                                ],
+                                formatter: '.BulletMicroValue'
+                            }" 
+                            color="{= ${Quant}/${Prodp} * 100 > 150 ? 'Error' : ( ${Quant}/${Prodp} * 100 &lt; 110 &amp;&amp; ${Quant}/${Prodp} * 100 >= 80 ? 'Good' : ( ${Quant}/${Prodp} * 100 >= 60 ? 'Critical' : 'Error' ) ) }" />
+                            <!-- color="{= ${Quant}/${Prodp} * 100 &lt; 110 &amp;&amp; ${Quant}/${Prodp} * 100 >= 80 ? 'Good' : ( ${Quant}/${Prodp} * 100 >= 60 ? 'Critical' : 'Error' ) }" -->
+                        </micro:actual>
+                        <micro:thresholds>
+                            <micro:BulletMicroChartData value="50" color="Error" />
+                            <micro:BulletMicroChartData value="80" color="Critical" />
+                            <micro:BulletMicroChartData value="110" color="Critical" />
+                            <micro:BulletMicroChartData value="150" color="Error" />
+                        </micro:thresholds>
+                    </micro:BulletMicroChart>
+                </FlexBox>
+                <!-- <FlexBox height="70px" width="70px" renderType="Bare">
+                    <layoutData>
+                        <FlexItemData maxHeight="70px" />
+                    </layoutData>
+                    <micro:RadialMicroChart size="Responsive" percentage="{= ${Quant}/${Prodp} * 100}" 
+                    valueColor="{= ${Quant}/${Prodp} * 100 &lt; 110 &amp;&amp; ${Quant}/${Prodp} * 100 >= 80 ? 'Good' : ( ${Quant}/${Prodp} * 100 >= 60 ? 'Critical' : 'Error' ) }"/>
+                </FlexBox> -->
+
+                <Text text="적정 생산 수준 &#10;
+                {= ${Prodp}*8/10-${Quant} > 0 ? '+' : '' }{= ${Prodp}*8/10-${Quant} > 0 ?  ${Prodp}*8/10-${Quant} : ( ${Prodp}*8/10-${Quant} ) }
+                 ~ {= ${Prodp}*11/10-${Quant} > 0 ? '+' : '' }{= ${Prodp}*11/10-${Quant} > 0 ?  ${Prodp}*11/10-${Quant} : ( ${Prodp}*11/10-${Quant} ) }" />
+
+            </cells>
+        </ColumnListItem>
+    </items>    
+</Table>
+
+ <Text text="  " />
+
+</content>
+
+
+</Page>
+
+</mvc:View>

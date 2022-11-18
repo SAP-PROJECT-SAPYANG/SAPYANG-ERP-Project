@@ -1,0 +1,272 @@
+<mvc:View controllerName="project1.controller.View1"
+    xmlns="sap.m"
+    xmlns:viz="sap.viz.ui5.controls" 
+    xmlns:micro="sap.suite.ui.microchart"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:form="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:core="sap.ui.core" 
+    height="100%">
+
+    <Page id="page" title="{i18n>title}">
+    
+        <VBox>
+            <HBox>
+                <Text text = '' width="10px"/>
+                <Button width="100%" text="제품" class="clickGrab" press="onToggle($event, 'product')">
+                </Button>
+                <Text text = '' width="5px"/>
+                <Button width="100%" text="플랜트" press="onToggle($event, 'plant')">
+                </Button>
+            </HBox>
+
+            <Text text="  " />
+        <!-- <Button width="100%" text="Plant1">
+			<layoutData><layout:SplitterLayoutData size="300px"/></layoutData>
+		</Button>
+         -->
+         <layout:Grid
+                containerQuery="true">
+                <VBox>
+                    <layout:FixFlex id='chartFixFlex' minFlexSize="250">
+                        <layout:flexContent>
+                           <viz:Popover id="idPopOver"></viz:Popover>
+                           <viz:VizFrame id="idVizFrame" uiConfig="{applicationSet:'fiori'}"
+                               height='500px' width="100%" vizType='pie'
+                               vizProperties="{
+                                plotArea:{
+                                                 dataLabel:{visible: true}
+                                     },
+                                                 title : {text:'불량점유율'}
+                                 }">
+                               <viz:dataset>
+                                   <viz.data:FlattenedDataset data="{view>/data}">
+                                       <viz.data:dimensions>
+                                           <viz.data:DimensionDefinition name="Matnm"
+                                               value="{view>x}" />
+                                       </viz.data:dimensions>
+                                       <viz.data:measures>
+                                           <viz.data:MeasureDefinition name="Fault"
+                                               value="{view>y}" />
+                                       </viz.data:measures>
+                                   </viz.data:FlattenedDataset>
+                               </viz:dataset>
+            
+                               <viz:feeds>
+                                   <viz.feeds:FeedItem uid="size" type="Measure"
+                                       values="Fault" />
+                                   <viz.feeds:FeedItem uid="color" type="Dimension"
+                                       values="Matnm" />
+                               </viz:feeds>
+                           </viz:VizFrame>
+                       </layout:flexContent>
+                    </layout:FixFlex>
+                    <layoutData>
+                        <layout:GridData
+                          span="XL6 L6 M6 S6" />
+                    </layoutData>
+                </VBox>
+
+                <VBox>
+                    <layout:FixFlex id='chartFixFlex2' minFlexSize="250">
+                        <layout:flexContent>
+                           <viz:Popover id="idPopOver2"></viz:Popover>
+                           <viz:VizFrame id="idVizFrame2" uiConfig="{applicationSet:'fiori'}"
+                               height='500px' width="100%" vizType='column'
+                               vizProperties="{
+                                title: {
+                                    style: {
+                                        color: ' '
+                                    },
+                                    text: '불량수량'
+                                },
+                                valueAxis: {
+                                    title: {
+                                        visible: false
+                                    }
+                                },
+                                categoryAxis: {
+                                    title: {
+                                        visible: false
+                                    }
+                                }
+                            }">
+                               <viz:dataset>
+                                   <viz.data:FlattenedDataset data="{view>/data}">
+                                       <viz.data:dimensions>
+                                           <viz.data:DimensionDefinition name="자재명"
+                                               value="{view>x}" />
+                                       </viz.data:dimensions>
+                                       <viz.data:measures>
+                                           <viz.data:MeasureDefinition name="수량"
+                                               value="{view>y}" />
+                                       </viz.data:measures>
+                                   </viz.data:FlattenedDataset>
+                               </viz:dataset>
+            
+                               <viz:feeds>
+                                   <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                                       values="수량" />
+                                   <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                                       values="자재명" />
+                               </viz:feeds>
+                           </viz:VizFrame>
+                       </layout:flexContent>
+                    </layout:FixFlex>
+                    <layoutData>
+                        <layout:GridData
+                          span="XL6 L6 M6 S6" />
+                    </layoutData>
+                </VBox>
+        </layout:Grid>
+         
+        </VBox>
+
+
+        <content>
+            <Table id="table"
+                    inset="false"
+                    items="{   path: '/FaultAnalysisSet'}"
+                    updateFinished=".oDataLoaded"
+                    visible="{= !!${view>/toggle} }"
+                    > 
+                    <!-- updateFinished 테이블 데이터가 변경될 때 실행되는 이벤트 !!정말 중요!! -->
+        
+            <columns>
+			<Column mergeDuplicates="true">
+                    <Text text="제품명" />
+                </Column>
+                <Column mergeDuplicates="true" mergeFunctionName="data#mergeKey">
+                    <Text text="총생산량" />
+                </Column>
+                <Column mergeDuplicates="true" mergeFunctionName="data#mergeKey">
+                    <Text text="불량수량" />
+                </Column>
+                <Column>
+                    <Text text="불량유형" />
+                </Column>
+                <Column>
+                    <Text text="유형별개수" />
+                </Column>
+                <Column>
+                    <Text text="유형별불량점유율" />
+                </Column>
+            </columns>
+        
+            <items>
+                <ColumnListItem vAlign="Middle">
+                   <cells>
+                        <Text text="{Matnm}"/>
+                        <Text text="{= parseFloat(${Quant})}">
+                            <customData>
+                                <core:CustomData key="mergeKey" value="{Matnm}"/>
+                            </customData>
+                        </Text>
+                        <Text text="{Fault}">
+                            <customData>
+                                <core:CustomData key="mergeKey" value="{Matnm}"/>
+                            </customData>
+                        </Text>
+                        <Text text= "{= ${Defty} === 'F001' ? 'F001 (제품파손)' : ( ${Defty} === 'F002' ? 'F002 (중량미달)'
+                        : ( ${Defty} === 'F003' ? 'F003 (중량초과)' : ( ${Defty} === 'F004' ? 'F004 (구성누락)'
+                        : ( ${Defty} === 'F005' ? 'F005 (이물질검출)' : ' ' ) ) ) ) }"/> 
+                        <!-- <Text text= "{= ${Defty} === 'F001' ? 'F001 (제품파손)' : ( ${Defty} === 'F002' ? 'F002 (중량미달)'
+                        : ( ${Defty} === 'F003' ? 'F003 (중량초과)' ) : ( ${Defty} === 'F004' ? 'F004 (구성누락)' )
+                        : ( ${Defty} === 'F005' ? 'F005 (이물질검출)' : ' ' ) ) }"/>             -->
+                        <Text text="{Dtcnt}" />
+                        <!-- <Text text="{=${Dtcnt}/${Fault}* 100}" /> -->
+                        <!-- <Text text="{=${Dtcnt}/${Fault}* 100}" /> -->
+                        <Text text="{
+                            parts: [
+                                { path: 'Dtcnt' }, 
+                                { path: 'Fault' }
+                            ],
+                            formatter: '.roundFormat'
+                        }" />
+                    </cells>
+                </ColumnListItem>
+            </items>    
+        </Table>
+<!--         
+         <Text text="  " />
+         -->
+        </content>
+
+        
+        <content>
+            <Table id="table2"
+                    inset="false"
+                    items="{   path: '/FaultAnalysisPlantSet'}"
+                    updateFinished=".oDataLoaded"
+                    visible="{= !${view>/toggle} }"
+                    > 
+                    <!-- updateFinished 테이블 데이터가 변경될 때 실행되는 이벤트 !!정말 중요!! -->
+        
+            <columns>
+			<Column mergeDuplicates="true">
+                    <Text text="플랜트" />
+                </Column>
+                <Column mergeDuplicates="true" mergeFunctionName="data#mergeKey">
+                    <Text text="총생산량" />
+                </Column>
+                <Column mergeDuplicates="true" mergeFunctionName="data#mergeKey">
+                    <Text text="불량수량" />
+                </Column>
+                <Column>
+                    <Text text="불량유형" />
+                </Column>
+                <Column>
+                    <Text text="유형별개수" />
+                </Column>
+                <Column>
+                    <Text text="유형별불량점유율" />
+                </Column>
+            </columns>
+        
+            <items>
+                <ColumnListItem vAlign="Middle">
+                   <cells>
+                        <Text text="{= ${Plant} === 'P001' ? '삽양광주공장' : ( ${Plant} === 'P002' ? '삽양화성공장' 
+                        : ( ${Plant} === 'P003' ? '삽양양주공장' : ' ' ) ) }" />
+                        <Text text="{= parseFloat(${Quant})}">
+                            <customData>
+                                <core:CustomData key="mergeKey" value="{Plant}"/>
+                            </customData>
+                        </Text>
+                        <Text text="{Fault}">
+                            <customData>
+                                <core:CustomData key="mergeKey" value="{Plant}"/>
+                            </customData>
+                        </Text>
+                        <Text text= "{= ${Defty} === 'F001' ? 'F001 (제품파손)' : ( ${Defty} === 'F002' ? 'F002 (중량미달)'
+                        : ( ${Defty} === 'F003' ? 'F003 (중량초과)' : ( ${Defty} === 'F004' ? 'F004 (구성누락)'
+                        : ( ${Defty} === 'F005' ? 'F005 (이물질검출)' : ' ' ) ) ) ) }"/> 
+                        <Text text="{Dtcnt}" />
+                        <!-- <Text text="{=${Dtcnt}/${Fault}* 100}" /> -->
+                        <Text text="{
+                            parts: [
+                                { path: 'Dtcnt' }, 
+                                { path: 'Fault' }
+                            ],
+                            formatter: '.roundFormat'
+                        }" />
+                        <!-- <Text value="{
+                            parts: [
+                                { path: 'Dtcnt' },
+                                { path: 'Fault' }
+                            ],
+                            formatter: '.diviValue'
+                        }" 
+                        text="{=${Dtcnt}/${Fault}* 100}" /> -->
+                    </cells>
+                </ColumnListItem>
+            </items>    
+        </Table>
+        
+         <Text text="  " />
+        
+        </content>
+    </Page>
+</mvc:View>
