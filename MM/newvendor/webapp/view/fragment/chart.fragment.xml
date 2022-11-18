@@ -1,0 +1,68 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz="sap.viz.ui5.controls"
+	xmlns:c="sap.ui.core">
+
+	<!-- <Text text="111"/> -->
+    <l:FixFlex id='chartFixFlex' minFlexSize="600">
+        <l:flexContent>
+            <viz:Popover id="staticPopover"></viz:Popover>
+
+            <!--
+                차트의 옵션( 데이터 표시, 색상, 타이틀 표시 ... 등 )을
+                변경하고 싶다면 vizProperties를 변경하면 된다.
+
+                참조 사이트 https://sapui5.hana.ondemand.com/docs/vizdocs/index.html
+            -->
+            <viz:VizFrame
+                id="staticChart"
+                uiConfig="{applicationSet:'fiori'}"
+                height="100%"
+                width="100%"
+                vizType='stacked_bar'
+                vizProperties="{
+                    title: {
+                        visible: true,
+                        style: {
+                            color: 'red'
+                        },
+                        text: ''
+                    },
+                    legend: {
+                        drawingEffect: 'glossy'
+                    },
+                    plotArea: {
+                        drawingEffect: 'glossy',
+                        dataLabel: {
+                            visible: true
+                        }
+                    }
+                }">
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{/RatingvendorSet}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Company"
+                                value="{Venna}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Score"
+                                value="{Score2}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                        values="Score" />
+                    <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                        values="Company" />
+                </viz:feeds>
+            </viz:VizFrame>
+        </l:flexContent>
+    </l:FixFlex>
+
+</c:FragmentDefinition>
+

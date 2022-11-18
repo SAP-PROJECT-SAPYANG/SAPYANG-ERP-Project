@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZGWC2MMINVENTM_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="InventM" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Stgcd"/>
+                    <PropertyRef Name="Matcd"/>
+                </Key>
+                <Property Name="Mbxwt" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="BOX중량"/>
+                <Property Name="Stgcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="창고코드"/>
+                <Property Name="Matcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="자재코드"/>
+                <Property Name="Mbxnu" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="BOX입수량"/>
+                <Property Name="Matty" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="자재타입코드"/>
+                <Property Name="Matnm" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Matsz" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="품목규격"/>
+                <Property Name="Avinv" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="가용재고"/>
+                <Property Name="Reinv" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="실재고"/>
+                <Property Name="Dtail" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="상세정보"/>
+            </EntityType>
+            <EntityType Name="InventC" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Matcd"/>
+                    <PropertyRef Name="Stgcd"/>
+                </Key>
+                <Property Name="Matcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="자재코드"/>
+                <Property Name="Stgcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="창고코드"/>
+                <Property Name="Vencd" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="고객코드"/>
+                <Property Name="Hisdt_I" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="기준일"/>
+                <Property Name="Hishm_I" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="기준시간"/>
+                <Property Name="Matnm" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Matty" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="자재타입코드"/>
+                <Property Name="Mquan" Type="Edm.Decimal" Precision="8" Scale="0" sap:unicode="false" sap:unit="Munit" sap:label="실재고량"/>
+                <Property Name="Munit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="단위" sap:semantics="unit-of-measure"/>
+                <Property Name="Hisdi" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="기준일"/>
+            </EntityType>
+            <EntityType Name="PurchaseOrderH" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ponum"/>
+                </Key>
+                <Property Name="Ponum" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="PO"/>
+                <Property Name="Otype" Type="Edm.String" MaxLength="8" sap:unicode="false" sap:label="오더타입"/>
+                <Property Name="Vencd" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="고객코드"/>
+                <Property Name="Ordat" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="주문일자"/>
+                <Property Name="Dreqd" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="납품요청일"/>
+                <Property Name="Stgcd" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="창고코드"/>
+                <Property Name="Empnm" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="사원명"/>
+                <Property Name="Stats" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="오더상태"/>
+            </EntityType>
+            <EntityType Name="PurchaseOrderI" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Ponum"/>
+                    <PropertyRef Name="Matcd"/>
+                </Key>
+                <Property Name="Ponum" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="PO"/>
+                <Property Name="Matcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="자재코드"/>
+                <Property Name="Matnm" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Matty" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="자재타입코드"/>
+                <Property Name="Matqt" Type="Edm.Decimal" Precision="8" Scale="2" sap:unicode="false" sap:unit="Munit" sap:label="수량"/>
+                <Property Name="Munit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="단위" sap:semantics="unit-of-measure"/>
+                <Property Name="Price" Type="Edm.Decimal" Precision="16" Scale="3" sap:unicode="false" sap:unit="Waers" sap:label="구매가"/>
+                <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:semantics="currency-code"/>
+            </EntityType>
+            <EntityContainer Name="ZGWC2MMINVENTM_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="InventMSet" EntityType="ZGWC2MMINVENTM_SRV.InventM" sap:content-version="1"/>
+                <EntitySet Name="InventCSet" EntityType="ZGWC2MMINVENTM_SRV.InventC" sap:content-version="1"/>
+                <EntitySet Name="PurchaseOrderHSet" EntityType="ZGWC2MMINVENTM_SRV.PurchaseOrderH" sap:content-version="1"/>
+                <EntitySet Name="PurchaseOrderISet" EntityType="ZGWC2MMINVENTM_SRV.PurchaseOrderI" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2MMINVENTM_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2MMINVENTM_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

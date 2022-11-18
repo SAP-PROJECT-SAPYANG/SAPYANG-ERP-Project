@@ -1,0 +1,82 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz="sap.viz.ui5.controls"
+	xmlns:c="sap.ui.core">
+    <!-- 
+        차트의 사이즈를 조절할때 minFlexSize로 조절하면된다.
+        혹은 VizFrame Control의 width, heigth로 조절.
+    -->
+    <l:FixFlex id='chartFixFlex' minFlexSize="600">
+        <l:flexContent>
+            <viz:Popover id="staticPopover"></viz:Popover>
+
+            <!-- 
+                차트의 옵션( 데이터 표시, 색상, 타이틀 표시 ... 등 )을
+                변경하고 싶다면 vizProperties를 변경하면 된다.
+
+                참조 사이트 https://sapui5.hana.ondemand.com/docs/vizdocs/index.html
+            -->
+            <!--
+                모델 바인딩 변경 부분
+                - FlattenedDataset data="{/Products}"
+                - DimensionDefinition value="{ProductName}"
+                - MeasureDefinition  value="{UnitPrice}"
+                -->
+            <!-- 
+                차트 Type에 따라 FeedItem의 uid가 달라짐.
+                위 공식 사이트 혹은 sample을 참조해서 Item을 맞추어 주어야한다.
+                -->
+            <viz:VizFrame 
+                id="staticChart" 
+                uiConfig="{applicationSet:'fiori'}"
+                height="100%" 
+                width="100%" 
+                vizType='line'
+                vizProperties="{
+                    title: {
+                        visible: true,
+                        style: {
+                            color: 'red'
+                        },
+                        text: ''
+                    },
+                    legend: {
+                        drawingEffect: 'glossy'
+                    },
+                    plotArea: {
+                        drawingEffect: 'glossy',
+                        dataLabel: {
+                            visible: true
+                        }
+                    }
+                }">
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{chart>/results}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="품목명"
+                                value="{
+                                        path: 'chart>Hisdt_I', 
+                                        type: 'sap.ui.model.type.Date', 
+                                        formatOptions: { pattern: 'yyyy-MM-dd', UTC: true }
+                                    }"/>
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="판매금액"
+                                value="{chart>Mquan}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="valueAxis" type="Measure"
+                        values="판매금액" />
+                    <viz.feeds:FeedItem uid="categoryAxis" type="Dimension"
+                        values="품목명" />
+                </viz:feeds>
+            </viz:VizFrame>
+        </l:flexContent>
+    </l:FixFlex>
+</c:FragmentDefinition>

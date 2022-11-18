@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZGWC2MMBID_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Newvendor_bid" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Bidno"/>
+                </Key>
+                <Property Name="Bidno" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="[MM] 입찰번호 데이터 엘레먼트"/>
+                <Property Name="Venna" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="[MM] 입찰 참여 회사명 데이터 엘레먼트"/>
+                <Property Name="Venno" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="자재코드"/>
+                <Property Name="Nation" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="[MM] 공급사 국적"/>
+                <Property Name="Vaddr" Type="Edm.String" MaxLength="30" sap:unicode="false" sap:label="주소"/>
+                <Property Name="Pstlz" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="우편코드"/>
+                <Property Name="Phnum" Type="Edm.String" MaxLength="15" sap:unicode="false" sap:label="[MM] 공급사 전화번호"/>
+                <Property Name="Mbxwt" Type="Edm.String" MaxLength="10" sap:unicode="false" sap:label="BOX중량"/>
+                <Property Name="Upric" Type="Edm.Decimal" Precision="18" Scale="3" sap:unicode="false" sap:unit="Waers" sap:label="[MM] 자재 단가 데이터 엘레먼트"/>
+                <Property Name="Waers" Type="Edm.String" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:semantics="currency-code"/>
+                <Property Name="Credt" Type="Edm.String" MaxLength="4" sap:unicode="false" sap:label="[MM] 신용등급 데이터 엘레먼트"/>
+                <Property Name="Evalu" Type="Edm.Byte" sap:unicode="false" sap:label="[MM] 입찰사 정성평가 결과"/>
+                <Property Name="Score" Type="Edm.Byte" sap:unicode="false" sap:label="[MM] 평가 총 점수 데이터 엘레먼트"/>
+                <Property Name="Rank" Type="Edm.Byte" sap:unicode="false" sap:label="[MM] 입찰 등수 데이터 엘레먼트"/>
+            </EntityType>
+            <EntityContainer Name="ZGWC2MMBID_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="Newvendor_bidSet" EntityType="ZGWC2MMBID_SRV.Newvendor_bid" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <atom:link rel="self" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2MMBID_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2MMBID_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

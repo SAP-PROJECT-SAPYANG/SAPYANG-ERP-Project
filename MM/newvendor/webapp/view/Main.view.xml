@@ -1,0 +1,482 @@
+<mvc:View xmlns:core="sap.ui.core" controllerName="b0315MM.newvendor.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:ch="sap.suite.ui.microchart"
+    displayBlock="true"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:f2="sap.f"
+    xmlns:custom="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    xmlns="sap.m">
+
+	<!-- Split App Container -->
+	<SplitApp
+		id="SplitAppDemo"
+		initialDetail="detail"
+		initialMaster="master"
+		afterDetailNavigate="onAfterDetailNavigate">
+
+		<masterPages>
+			<!-- Page -->
+			<!-- 입찰시 조회 Page -->
+			<!-- 평가 결과 Page -->
+			<!-- 기타 Page-->
+			<Page
+				id="master"
+				title="화면 목록"
+				backgroundDesign= "List">
+				<List itemPress=".onListItemPress">
+					<StandardListItem title="입찰사 조회" type="Navigation" custom:to="detail1"  />
+					<StandardListItem title="평가 결과" type="Navigation"  custom:to="detail2" />
+					<StandardListItem title="차트" type="Navigation"  custom:to="detail3" />
+				</List>
+			</Page>
+		</masterPages>
+
+		<!-- 우측 페이지에 대한 Container -->
+		<!-- detailPages Aggregation 내 Page들을 넣어서 여러 페이지를 구성한다. -->
+		<detailPages>
+
+			<Page
+				id="detail1"
+				title="신규 입찰 등록사 관리"
+				backgroundDesign= "Solid">
+<!-- , sorter: [{path: 'Bidno', descending: true}, {path: 'Venna', descending: true}] -->
+
+					<!-- items="{path: 'bidlist>/oData', sorter: {path: 'bidlist>Venna', descending: true}}" -->
+				<List
+					id="idList"
+					items="{path: 'bidlist>/results'}"
+					growing="true"
+
+					growingThreshold="5">
+					<headerToolbar>
+						<OverflowToolbar>
+							<Title
+								text="입찰 참여사 목록" />
+							<ToolbarSpacer />
+
+							<Button
+								icon="sap-icon://sort-ascending"
+								press="onSort($event, 'asc')" />
+							<Button
+								icon="sap-icon://sort-descending"
+								press="onSort($event, 'dec')" />
+						</OverflowToolbar>
+					</headerToolbar>
+					 <StandardListItem
+					 	type="Navigation"
+						press="onPressDetailItem"
+						title="{bidlist>Venna}"
+						description="{bidlist>Bidno}"
+						icon="sap-icon://business-card"
+						iconDensityAware="false"
+						iconInset="false" />
+
+				</List>
+			</Page>
+
+			<!-- 2번째 Detail Page -->
+			<Page
+				id="detail2"
+				title="입찰사 평가"
+				backgroundDesign= "Solid">
+			<IconTabBar
+				id="idIconTabBar"
+				select=".onFilterSelect"
+				class="sapUiResponsiveContentPadding">
+
+				<items>
+					<IconTabFilter
+						showAll="true"
+						count="{count>/count}"
+						text="companies" />
+
+					<IconTabSeparator />  <!-- 구분선 -->
+					<IconTabFilter
+						icon="sap-icon://message-popup"
+						iconColor="Positive"
+						count="{count>/wheat_count}"
+						text="소맥분"
+						key="wheat" />
+					<IconTabFilter
+						icon="sap-icon://message-popup"
+						iconColor="Critical"
+						count="{count>/potato_count}"
+						text="감자전분"
+						key="potato" />
+					<IconTabFilter
+						icon="sap-icon://message-popup"
+						iconColor="Negative"
+						count="{count>/oil_count}"
+						text="올리브유"
+						key="olive" />
+				</items>
+				<content>
+					<Table
+						id="bidTable"
+						inset="false"
+						showSeparators="All"
+						headerText="All companies"
+						items="{
+							path: 'view>/tableData',
+							parameters: {operationMode: 'Client'},
+							sorter: {
+								path: 'view>Score',
+								descending: true
+							}
+						}">
+						<infoToolbar>
+							<OverflowToolbar>
+								<Label text="전체 후보사 평가정보 테이블"/>
+							</OverflowToolbar>
+						</infoToolbar>
+						<columns>
+							<Column
+								width="8em">
+								<Text text="입찰 번호" />
+							</Column>
+							<Column
+								width="6em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="신용 등급" />
+							</Column>
+							<Column
+								width="6em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="신용 점수" />
+							</Column>
+							<Column
+								width="7em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="자재 단가"/>
+							</Column>
+							<Column
+								width="6em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="단가 점수" />
+							</Column>
+							<Column
+								width="9em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="제품 품질" />
+							</Column>
+							<Column
+								width="7em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="품질 점수" />
+							</Column>
+							<Column
+								width="5em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="가산점" />
+							</Column>
+							<Column
+								width="6em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="총 점수" />
+							</Column>
+							<!-- <Column
+								width="6em"
+								demandPopin="true"
+								hAlign="Center">
+								<Text text="총 점수" />
+							</Column> -->
+
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<ObjectIdentifier
+										title="{view>Bidno}"
+										text="{view>Venna}"/>
+									<Text
+										text="{view>Credt}" />
+									<Text
+										text="{view>Crdsc}" />
+									<ObjectNumber
+										number="{view>Ucost}"
+										unit="{view>Waers}" />
+									<Text
+										text="{view>Uctsc2}" />
+									<Text
+										text="{view>Qualt}" />
+									<Text
+										text="{view>Qltsc2}" />
+									<!-- <Text
+										text="{view>Extra}" /> -->
+									<Text
+										text="{view>Extsc}" />
+									<Text
+										text="{view>Score2}" />
+									<ObjectNumber
+										class="sapUiSmallMarginBottom"
+										number="{view>Score}"
+										state="{= !!${view>TopScore} ? 'Success' : 'Error'}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+
+				</content>
+			</IconTabBar>
+			<Button id="toTop" icon="sap-icon://back-to-top" text="맨위로" press="onScrollTop"></Button>
+
+			</Page>
+
+
+			<!-- 3번째 Detail Page -->
+			<Page
+				id="detail3"
+				title="Charts"
+				backgroundDesign= "Solid">
+				<Toolbar>
+					<Title level="H2" text="입찰 등록 품목 비율" />
+				</Toolbar>
+					<layoutData>
+						<l:GridData span="XL12 L12 M12 S12"/>
+					</layoutData>
+				<FlexBox width="20rem" height="10rem" alignItems="Center" justifyContent="Start">
+					<items>
+						<ch:InteractiveDonutChart id="chart1" selectionChanged="onSelectionChanged">
+							<ch:segments>
+								<!-- <ch:InteractiveDonutChartSegment label="소맥분"  value="{count>/wheat_percent}" displayedValue="{count>/wheat_percent}%" color="Error"/> -->
+								<ch:InteractiveDonutChartSegment label="소맥분"  value="{count>/wheat_percent}" displayedValue="{count>/wheat_percent}%" color="Error"/>
+								<ch:InteractiveDonutChartSegment label="올리브유" value="{count>/oil_percent}" displayedValue="{count>/oil_percent}%" color="Critical"/>
+								<ch:InteractiveDonutChartSegment label="감자전분" value="{count>/potato_percent}" displayedValue="{count>/potato_percent}%" color="Good"/>
+							</ch:segments>
+						</ch:InteractiveDonutChart>
+					</items>
+				</FlexBox>
+				<Toolbar>
+					<Title level="H2" text="회사별 점수 차트" />
+				</Toolbar>
+				<content>
+				<!-- Chart Fragment 추가 -->
+					<core:Fragment id="DynamicTypeChart" fragmentName="b0315MM.newvendor.view.fragment.chart" type="XML" />
+				</content>
+
+
+
+			</Page>
+
+			<!-- 4번째 Detail Page -> 1번째 페이지(입찰 참여사)에 대한 상세페이지 -->
+			<!-- showNavButton -> 뒤로가기 버튼 보여주기 -->
+			<!-- navButtonPress -> 뒤로가기 버튼 클릭시 detail1 보여주기 -->
+			<Page
+				id="detail1-1"
+				title="{view>/}"
+				showHeader="true"
+				backgroundDesign= "Solid"
+				showNavButton="true"
+				navButtonPress=".onPressDetailBack">
+				<customHeader>
+					<Bar>
+						<contentLeft>
+							<Button icon="sap-icon://nav-back" visible="true" press=".onPressDetailBack"/>
+						</contentLeft>
+						<contentRight>
+							<Button id="edit"
+									text="Edit"
+									visible="{= ${view>/detail1-1/view/mode} === 'display' }"
+								    press="handleEditPress" />
+							<Button id="save"
+									text="Save"
+									type="Emphasized"
+									visible="{= ${view>/detail1-1/view/mode} === 'edit' }"
+									press="handleSavePress" />
+							<Button id="cancel"
+									text="Cancel"
+									type="Reject"
+									visible="{= ${view>/detail1-1/view/mode} === 'edit' }"
+									press="handleEditPress" />
+						</contentRight>
+					</Bar>
+				</customHeader>
+				<content>
+					<VBox class="sapUiSmallMargin">
+						<f:Form id="FormDisplay354wideDual"
+							editable="true"
+							binding="{view>/detail1-1/data}">
+							<f:title>
+								<core:Title text="{view>Venna}" level="H3" />
+							</f:title>
+							<f:layout>
+								<f:ResponsiveGridLayout
+									backgroundDesign="Solid"
+									labelSpanXL="4"
+									labelSpanL="3"
+									labelSpanM="4"
+									labelSpanS="12"
+									adjustLabelSpan="false"
+									emptySpanXL="0"
+									emptySpanL="4"
+									emptySpanM="0"
+									emptySpanS="0"
+									columnsXL="2"
+									columnsL="1"
+									columnsM="1"
+									singleContainerFullSize="false" />
+							</f:layout>
+							<f:formContainers>
+								<f:FormContainer title="Office">
+									<f:formElements>
+										<f:FormElement label="입찰 번호">  <!-- 편집불가 -->
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Bidno}"
+													id="Bidno"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit'}"/>
+												<Text text="{view>Bidno}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="국적">
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Nation}"
+													placeholder="국적"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }">
+												</Input>
+												<Text text="{view>Nation}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="상세 주소">
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Vaddr}"
+													placeholder="주소"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }">
+												</Input>
+												<Text text="{view>Vaddr}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="연락처">
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Phnum}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													placeholder="연락처"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }"/>
+												<Text text="{view>Phnum}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="신용등급">
+											<f:fields>
+											<!-- <Input
+												value="{Credt}"
+												id="Credt"
+												editable="{= ${view>/detail1-1/view/mode} === 'edit' }"/> -->
+
+												<VBox>
+												<Text text="{view>Credt}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"></Text>
+												<Select
+													id="credit" selectedKey="{view>Credt}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }">
+													<items>
+														<core:Item text="AAA" key="AAA"/>
+														<core:Item text="AA" key="AA"/>
+														<core:Item text="AA-" key="AA-"/>
+														<core:Item text="A" key="A"/>
+														<core:Item text="BBB" key="BBB"/>
+														<core:Item text="BB" key="BB"/>
+														<core:Item text="BB-" key="BB-"/>
+														<core:Item text="B" key="B"/>
+														<core:Item text="CCC" key="CCC"/>
+														<core:Item text="CC" key="CC"/>
+														<core:Item text="CC-" key="CC-"/>
+														<core:Item text="C" key="C"/>
+
+													</items>
+												</Select>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+
+								<f:FormContainer title="Material">
+									<f:formElements>
+										<f:FormElement label="공급할 자재 코드">
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Venno}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }" />
+												<Text text="{view>Venno}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="자재명">
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Matnm}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }" />
+												<Text text="{view>Matnm}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="단위 중량">
+											<f:fields>
+												<VBox>
+												<Input
+													value="{view>Mbxwt}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }" />
+												<Text text="{view>Mbxwt}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}"/>
+												</VBox>
+											</f:fields>
+										</f:FormElement>
+										<f:FormElement label="단위 단가" >
+											<f:fields>
+												<HBox>
+												<Input
+													value="{view>Upric}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit'}">
+												</Input>
+												<Text text="{view>Upric}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}" class=""/>
+												<Input
+													value="{view>Waers}"
+													visible="{= ${view>/detail1-1/view/mode} === 'edit'}"
+													editable="{= ${view>/detail1-1/view/mode} === 'edit' }">
+												</Input>
+												<Text text="{view>Waers}" visible="{= ${view>/detail1-1/view/mode} !== 'edit'}" class="sapUiTinyMarginBegin"/>
+												</HBox>
+											</f:fields>
+										</f:FormElement>
+									</f:formElements>
+								</f:FormContainer>
+							</f:formContainers>
+						</f:Form>
+					</VBox>
+				</content>
+			</Page>
+
+		</detailPages>
+		<masterPages>
+		</masterPages>
+
+	</SplitApp>
+</mvc:View>

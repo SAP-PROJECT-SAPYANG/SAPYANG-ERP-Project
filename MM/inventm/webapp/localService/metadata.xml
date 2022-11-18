@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZGWC2MMINVENTM_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="InventM" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Stgcd"/>
+                    <PropertyRef Name="Matcd"/>
+                </Key>
+                <Property Name="Stgcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="창고코드"/>
+                <Property Name="Matcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="자재코드"/>
+                <Property Name="Matty" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="자재타입코드"/>
+                <Property Name="Matnm" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Matsz" Type="Edm.String" MaxLength="20" sap:unicode="false" sap:label="품목규격"/>
+                <Property Name="Munit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="단위" sap:semantics="unit-of-measure"/>
+                <Property Name="Avinv" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="가용재고"/>
+                <Property Name="Reinv" Type="Edm.String" MaxLength="6" sap:unicode="false" sap:label="실재고"/>
+                <Property Name="Dtail" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="상세정보"/>
+            </EntityType>
+            <EntityContainer Name="ZGWC2MMINVENTM_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="InventMSet" EntityType="ZGWC2MMINVENTM_SRV.InventM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer>
+                <!-- <EntityType Name="InventS" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Stgcd"/>
+                    <PropertyRef Name="Matcd"/>
+                </Key>
+                <Property Name="Stgcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="창고코드"/>
+                <Property Name="Matcd" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="자재코드"/>
+                <Property Name="Matty" Type="Edm.String" MaxLength="1" sap:unicode="false" sap:label="자재타입코드"/>
+                <Property Name="Matnm" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="자재명"/>
+                <Property Name="Munit" Type="Edm.String" MaxLength="3" sap:unicode="false" sap:label="단위" sap:semantics="unit-of-measure"/>
+                <Property Name="HisdtI" Type="Edm.DateTime" MaxLength="6" sap:unicode="false" sap:label="가용재고"/>
+                <Property Name="HishmI" Type="Edm.Time" MaxLength="6" sap:unicode="false" sap:label="실재고"/>
+                <Property Name="Mquan" Type="Edm.String" MaxLength="40" sap:unicode="false" sap:label="상세정보"/>
+            </EntityType>
+            <EntityContainer Name="ZGWC2MMINVENTM_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="InventMSet" EntityType="ZGWC2MMINVENTM_SRV.InventM" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+            </EntityContainer> -->
+            <atom:link rel="self" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2MMINVENTM_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://edu.bgis.co.kr:8001/sap/opu/odata/sap/ZGWC2MMINVENTM_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,145 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+   <Dialog
+      id="helloDialog"
+      title="구매요청서" contentWidth="800px">
+
+        <VBox class="sapUiSmallMargin">
+            <f:Form 
+                editable="true">
+                <f:title>
+                    <core:Title text="구매요청서 오더번호 발행" />
+                </f:title>
+                <f:layout>
+                    <f:ResponsiveGridLayout
+                        labelSpanXL="4"
+                        labelSpanL="4"
+                        labelSpanM="12"
+                        labelSpanS="12"
+                        adjustLabelSpan="false"
+                        emptySpanXL="0"
+                        emptySpanL="0"
+                        emptySpanM="0"
+                        emptySpanS="0"
+                        columnsXL="2"
+                        columnsL="2"
+                        columnsM="1"
+                        singleContainerFullSize="false" />
+                </f:layout>
+                <f:formContainers>
+                    <f:FormContainer>
+                        <f:formElements>
+                            <f:FormElement label="오더타입">
+                                <f:fields>
+                                    <ObjectStatus
+                                        text="{dailog>/orderType}"
+                                        state="{= ${dailog>/orderType} === 'SERIOUS' ? 'Error' : 'Warning' }" />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="공급사">
+                                <f:fields>
+                                    <ComboBox  
+                                        id="vendor"
+                                        items="{
+                                            path: 'ven>/vendor',
+                                            templateSharable: true
+                                            }"
+                                        selectionChange=".onVendorSelect">
+                                        <core:Item key="{ven>key}" text="{ven>key}"/>
+                                    </ComboBox>
+                                    <!-- <Text text="{dailog>/UserCode}" /> -->
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="주문일자">
+                                <f:fields>
+                                    <Text text="{
+                                        path: 'dailog>/Today',
+                                        type: 'sap.ui.model.type.Date'
+                                    }" />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="납품요청일 ">
+                                <f:fields>
+                                    <Text text="{
+                                        path: 'dailog>/requestDate',
+                                        type: 'sap.ui.model.type.Date'
+                                    }" />
+                                </f:fields>
+                            </f:FormElement>
+                            <f:FormElement label="창고코드 ">
+                                <f:fields>
+                                    <Text text="{dailog>/storage}" />
+                                </f:fields>
+                            </f:FormElement>
+                        </f:formElements>
+                    </f:FormContainer>
+                </f:formContainers>
+            </f:Form>
+            <Table
+                inset="false"
+                items="{
+                    path: 'dailog>/selectTableList'
+                }">
+                <columns>
+                    <Column width="14em">
+                    <Text text="창고 코드" />
+                </Column>
+                <Column 
+                    minScreenWidth="Desktop" width="10em"
+                    demandPopin="true">
+                    <Text text="Product" />
+                </Column>
+                <Column minScreenWidth="Tablet" width="10em">
+                    <Text text="자재 타입" />
+                </Column>
+                <Column 
+                    minScreenWidth="Tablet" width="13.5em"
+                    demandPopin="true">
+                    <Text text="규격" />
+                </Column>
+                <!-- <Column 
+                    minScreenWidth="Tablet"
+                    demandPopin="true">
+                    <Text text="가용재고"  />
+                </Column> -->
+                <Column
+                    minScreenWidth="Tablet"
+                    demandPopin="true">
+                    <Text text="주문수량" />
+                </Column>
+                </columns>
+                <items>
+                    <ColumnListItem vAlign="Middle">
+                        <cells>
+                            <Text
+                                text="{dailog>Stgcd}" />
+                            <ObjectIdentifier
+                                title="{dailog>Matnm}"
+                                text= "{dailog>Matcd}"/>                      
+                            <Text text="{= ${dailog>Matty} === '3' ? '완제품' : ${dailog>Matty} === '2' ? '반제품' : '원재료'}" />                  
+                            <Text text="{dailog>Mbxwt} x {dailog>Mbxnu}"/>
+                            <!-- <Text text="{
+                                path: 'dailog>Avinv',
+                                type: 'sap.ui.model.type.Float'
+                            }" /> -->
+                            <Input value="{
+                                path: 'dailog>Reinv',
+                                type: 'sap.ui.model.type.Float'
+                            }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </VBox>
+
+    
+    <buttons>
+        <Button text="요청서 생성" press=".onRequisition" />
+        <Button text="닫기" press="onCloseDialog"/>
+    </buttons>
+            
+   </Dialog>
+</core:FragmentDefinition>

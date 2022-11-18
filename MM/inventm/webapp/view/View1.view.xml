@@ -1,0 +1,163 @@
+<mvc:View controllerName="b03.mm.inventm.inventm.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns:core="sap.ui.core"
+    xmlns:ui="sap.ui.table" xmlns:f="sap.ui.layout.form"  xmlns:l="sap.ui.layout"
+    xmlns="sap.m" xmlns:fb="sap.ui.comp.filterbar">
+    <Page id="page" title="{i18n>title}">        
+                <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+                    <fb:filterItems>
+                        <fb:FilterItem name="StorageName" label="창고 코드">
+                            <fb:control>
+                                <ComboBox
+                                    id="storage"
+                                    name="Name"
+                                    selectionChange=".onSelectionChange"
+                                    items="{
+                                        path: 'filter>/contents',
+                                        templateShareable: true
+                                    }"
+                                >
+                                    <core:Item key="{filter>key}" text="{filter>key}"/>
+                                </ComboBox>
+                            </fb:control>
+                        </fb:FilterItem>
+                        <fb:FilterItem name="MaterialType" label="자재 타입">
+                            <fb:control>
+                                <ComboBox
+                                    id="mattype"
+                                    name="Name2"
+                                    selectionChange=".onSelectionChange">
+                                    <core:Item key="1" text="원재료"/>
+                                    <core:Item key="2" text="반제품"/>
+                                    <core:Item key="3" text="완제품"/>
+                                </ComboBox>
+                            </fb:control>
+                        </fb:FilterItem>
+                    </fb:filterItems>
+                </fb:FilterBar>            
+    	<IconTabBar
+            id="idIconTabBar"
+            select="onFilterSelect"
+            class="sapUiResponsiveContentPadding">
+
+		<items>
+			<IconTabFilter
+				showAll="true"
+				count="{count>/count}"
+				text="Products"
+				key="All" />
+			<IconTabSeparator />
+			<IconTabFilter
+				icon="sap-icon://begin"
+				iconColor="Positive"
+				count="{count>/Ok_count}"
+				text="Ok"
+				key="Ok" />
+			<IconTabFilter
+				icon="sap-icon://feedback"
+				iconColor="Critical"
+				count="{count>/Minimum_count}"
+				text="Minimum"
+				key="Minimum" />
+			<IconTabFilter
+				icon="sap-icon://alert"
+				iconColor="Negative"
+				count="{count>/Danger_count}"
+				text="Danger"
+				key="Danger" />
+		</items>
+        <content>   
+            <Table id="table"
+                updateFinished="onUpdateFinished"
+                inset="false"
+				showSeparators="Inner"
+                rememberSelections="true"
+                growingThreshold="2000" growing="true"
+                items="{
+                    path: 'view>/InventMSet'
+                }"
+                mode="SingleSelectMaster"  delete="onDelete"
+                selectionChange="onNavToView2">
+        <headerToolbar>
+            <OverflowToolbar>
+                <content>
+                <HBox >
+                    <Title text="재고 현황" level="H2" width="58em"/>
+                    <ToggleButton id="Button1" pressed="true" press="onModeChange" text="요청 자재 선택" visible="{btnv>/btnVisible}">
+                        <layoutData>
+					        <FlexItemData growFactor="1" />
+				        </layoutData>
+                    </ToggleButton>
+                    <ToggleButton 
+                            id="Button2" text="구매요청서 생성" icon="sap-icon://action"              
+                            enabled="false" pressed="true" press="onDialogPress"
+                            class="sapUiSmallMarginEnd" visible="{btnv>/btnVisible}"
+                            >
+                        <layoutData>
+                            <FlexItemData growFactor="1" />
+                        </layoutData>
+                    </ToggleButton>
+                </HBox>      
+                    <ToolbarSpacer></ToolbarSpacer>
+                </content>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column width="23em" 
+                >
+                <Text text="창고 코드" />
+            </Column>
+            <Column minScreenWidth="Desktop"
+				demandPopin="true"
+                width="17em">
+                <Text text="Product" />
+            </Column>
+            <Column minScreenWidth="Tablet" width="13em">
+                <Text text="자재 타입" />
+            </Column>
+            <Column minScreenWidth="Tablet"
+				demandPopin="true"
+                width="18em">
+                <Text text="규격" />
+            </Column>
+            <Column>
+                <Text text="가용재고" />
+            </Column>
+            <Column>
+                <Text text="실재고" />
+            </Column>
+            <!-- <Column>
+                <Text text="상세정보" />
+            </Column> -->
+        </columns>
+        <items>
+            <ColumnListItem vAlign="Middle">
+                <cells>
+                    <Text
+                        text="{view>Stgcd}" />
+                    <ObjectIdentifier
+                            title="{view>Matnm}"
+                            text= "{view>Matcd}"
+                            />                      
+                    <Text
+                        text="{= ${view>Matty} === '3' ? '완제품' : ${view>Matty} === '2' ? '반제품' : '원재료'}" />                  
+                    <Text text="{view>Mbxwt} x {view>Mbxnu}"/>
+                    <!-- <Text
+                        text="{Munit}" /> --> 
+                    <Text
+                        text="{view>Avinv}" />
+                    <Text
+						text="{view>Reinv}"
+                        />
+
+                    <!-- <Text
+                        text="{Dtail}" /> -->
+                    <!-- <Text
+                        text="{ path: 'Erzet', type: 'sap.ui.model.odata.type.Time'}" /> -->
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
+        </content>
+    </IconTabBar>
+    </Page>
+</mvc:View>

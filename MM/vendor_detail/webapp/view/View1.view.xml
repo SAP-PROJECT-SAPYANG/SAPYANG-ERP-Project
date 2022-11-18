@@ -1,0 +1,147 @@
+<mvc:View controllerName="b020315.vendordetail.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+    xmlns:table="sap.ui.table"
+    height="100%">
+    <Page id="page" title="{i18n>title}">
+
+        <content>
+            <!-- 1 Line -->
+            <VBox>
+                <Table id = "vendorbid" growing="true" growingThreshold="5"
+                       items="{path : '/VendorbidSet'
+                              }"
+			            mode="SingleSelectMaster"
+			            selectionChange="onTableHeaderSelect"
+						delete="onDeleteData"
+						updateFinished="onHeaderTableChanged">
+			<headerToolbar>
+                    <OverflowToolbar>
+                        <content>
+				 		<Title text="공급사 기본정보" titleStyle="H3"/>
+							<Button icon="sap-icon://refresh" text="새로고침" press="onRefresh"/>
+							<ToolbarSpacer/>
+							<Button text="생성" visible="{= ${tog>/stat} === '__Normal' ? true : false }" press="onCreateMode"/>
+							<Button text="수정" visible="{= ${tog>/stat} === '__Normal' ? true : false }" press="onEditMode"/>
+							<Button text="저장" visible="{= ${tog>/stat} === '__Create' ? true : false }" press="onCreateData" type="Accept"/>
+							<Button text="취소" visible="{= ${tog>/stat} === '__Create' ? true : false }" press="onCreateCancel" type="Reject"/>
+							<Button text="저장" visible="{= ${tog>/stat} === '__Edit' ? true : false }" press="onUpdateData" type="Accept"/>
+							<Button text="취소" visible="{= ${tog>/stat} === '__Edit' ? true : false }" press="onEditCancel" type="Reject"/>
+							<ToolbarSeparator />
+							<Button text="삭제" visible="{= ${tog>/stat} === '__Normal' ? true : false }" press="onDeleteMode" type="Reject"/>
+							<Button text="취소" visible="{= ${tog>/stat} === '__Delete' ? true : false }" press="onDeleteCancel" type="Reject"/>
+                        </content>
+                    </OverflowToolbar>
+			</headerToolbar>
+			<columns>
+				<Column
+					hAlign="Center">
+					<Text text="공급사 계정"/>
+				</Column>
+				<Column
+					hAlign="Center">
+					<Text text="국가"/>
+				</Column>
+                <Column
+					hAlign="Center">
+                    <Text text="공급사명"/>
+                </Column>
+				<Column
+					hAlign="Center">
+					<Text text="도시"/>
+				</Column>
+				<Column
+					hAlign="Center">
+					<Text text="우편번호"/>
+				</Column>
+				<Column
+					hAlign="Center">
+					<Text text="주소"/>
+				</Column>
+
+			</columns>
+			<items>
+				<ColumnListItem vAlign="Middle">
+				  <cells>
+					<Text text="{Lifnr}"/>
+					<Input class="TextInput" value="{Land1}" editable="false" width="5rem" textAlign="Center"/>
+					<Input class="TextInput" value="{Name1}" editable="false" width="8rem" textAlign="Center"/>
+					<Input class="TextInput" value="{Ort01}" editable="false" width="5rem" textAlign="Center"/>
+					<Input class="TextInput" value="{Pstlz}" editable="false" width="6rem" textAlign="Center"/>
+					<Input class="TextInput" value="{Adrnr}" editable="false" width="10rem" textAlign="Left"/>
+				  </cells>
+				</ColumnListItem>
+			</items>
+		</Table>
+
+		</VBox>
+
+		<!-- 2 lines -->
+		<VBox>
+			<Panel width="auto" class="sapUiSmallMargin">
+			</Panel>
+		</VBox>
+
+            <!-- 4 lines -->
+		<VBox>
+			<Table growing="true" growingThreshold="5" id="Vendordetail"
+				items="{/VendordetailSet}"
+				mode="SingleSelectMaster"
+				selectionChange="onTableItemsSelect"
+				delete="onItemDeleteData">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+				 <Title text="상세 정보" titleStyle="H3"/>
+					<ToolbarSpacer/>
+					<Button text="수정" visible="{= ${tog>/stat} === '__Normal' ? true : false }" press="onItemEditMode"/>
+					<Button text="저장" visible="{= ${tog>/stat} === '__EditItem' ? true : false }" press="onItemUpdateData" type="Accept"/>
+					<Button text="취소" visible="{= ${tog>/stat} === '__EditItem' ? true : false }" press="onItemEditCancel" type="Reject"/>
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+
+		<columns>
+			<Column
+				hAlign="Center">
+				<Text text="자재 코드"/>
+			</Column>
+			<Column
+				hAlign="Center">
+				<Text text="공급사 코드"/>
+			</Column>
+			<Column
+				hAlign="Center">
+				<Text text="자재명"/>
+			</Column>
+			<Column
+				hAlign="Center">
+				<Text text="주문타입"/>
+			</Column>
+			<Column
+				hAlign="Center">
+				<Text text="단가"/>
+			</Column>
+			<Column
+				hAlign="Center">
+				<Text text="통화"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem>
+				<Text text="{Matcd}"/>
+				<Text text="{Lifnr}"/>
+				<Text text="{Matnm}"/>
+				<Text text="{Ordty}"/>
+                <Input class="TextInput" value="{Mcurr}" editable="false" width="6rem" textAlign="Center"/>
+				<Text text="{Mcuky}"/>
+			</ColumnListItem>
+		</items>
+	</Table>
+		</VBox>
+	</content>
+    </Page>
+</mvc:View>
+
+
